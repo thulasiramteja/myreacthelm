@@ -1,13 +1,19 @@
+# Use a lightweight base image
 FROM alpine:latest
 
-# Install Helm and Kubernetes tools
+# Install dependencies: curl, bash, kubectl, and Helm
 RUN apk add --no-cache curl bash kubectl \
     && curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
-# Copy Kubernetes/Helm files into the container
+# Set the working directory inside the container
 WORKDIR /app
+
+# Copy your Helm chart and Kubernetes YAML files into the container
 COPY . .
 
-# Set up Helm or kubectl commands to apply your manifests
-CMD ["helm", "install", "my-release", "/app/my-chart.tgz"]
+# Set environment variables for Kubernetes namespace (optional, modify as needed)
+ENV NAMESPACE=default
+
+# Command to deploy the Helm chart and apply Kubernetes YAML files
+CMD ["sh", "-c", "helm upgrade --install myreactapp . "]
 
