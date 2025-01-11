@@ -1,0 +1,26 @@
+frontend:
+  name: react-frontend
+  replicas: 2
+  image: thulasiramteja/react-frontend:latest
+  port: 80
+  nodePort: 30000
+
+backend:
+  name: node-backend
+  replicas: 2
+  image: thulasiramteja/node-backend:latest
+  port: 5000
+  nodePort: 32319
+  env:
+    DB_HOST: postgres-service
+    DB_USER: myappuser
+    DB_PASSWORD: testing
+    DB_NAME: myappdb
+
+postgres:
+  name: postgres
+  image: postgres:13
+  user: myappuser
+  password: testing
+  db: myappdb
+  storage: 1Gi
