@@ -9,4 +9,5 @@ WORKDIR /app
 COPY . .
 
 # Set up Helm or kubectl commands to apply your manifests
-CMD ["sh", "-c", "kubectl apply -f /app"]
+CMD ["helm", "install", "my-release", "/app/my-chart.tgz"]
+
